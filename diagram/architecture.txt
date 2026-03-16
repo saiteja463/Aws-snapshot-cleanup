@@ -1,0 +1,36 @@
+AWS Snapshot Cleanup Architecture
+
+1. EventBridge Rule
+   - Runs on schedule: rate(1 day)
+   - Triggers the Lambda function automatically.
+
+2. AWS Lambda Function
+   - Python runtime
+   - Executes cleanup_snapshots.py
+   - Runs inside a VPC private subnet.
+
+3. IAM Role
+   - Allows Lambda to:
+     - Describe EC2 snapshots
+     - Delete EC2 snapshots
+     - Write logs to CloudWatch.
+
+4. VPC
+   - Isolated network for Lambda execution.
+
+5. Private Subnet
+   - Lambda runs inside the private subnet.
+
+6. Security Group
+   - Allows Lambda outbound access to AWS services.
+
+7. EC2 Snapshot API
+   - Lambda retrieves snapshots.
+   - Deletes snapshots older than 365 days.
+
+8. CloudWatch Logs
+   - Stores Lambda execution logs.
+
+Execution Flow:
+
+EventBridge → Lambda → EC2 Snapshots → Delete Old Snapshots → CloudWatch Logs
