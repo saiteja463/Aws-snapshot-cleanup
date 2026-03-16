@@ -36,3 +36,23 @@ Aws-snapshot-cleanup/
 ├── lambda/
 │   └── cleanup_snapshots.py
 └── README.md
+
+## Deployment Steps
+
+### 1. Package the Lambda Function
+
+Navigate to the lambda folder and package the code:
+
+```bash
+cd lambda
+zip function.zip cleanup_snapshots.py
+
+cd terraform
+terraform init
+
+terraform plan
+
+
+---
+
+
